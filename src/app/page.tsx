@@ -13,7 +13,7 @@ const categories = [
 
 async function fetchCategory(categoryId: number, title: string) {
   try {
-    const { results } = await getMoviesByGenre({ genreId: categoryId });
+    const results = await getMoviesByGenre(categoryId);
     return { title, contents: results };
   } catch (error) {
     console.error(`Failed to fetch category ${title}:`, error);
@@ -22,7 +22,7 @@ async function fetchCategory(categoryId: number, title: string) {
 }
 
 export default async function Home() {
-  const { results: topRated } = await getTopRated();
+  const topRated = await getTopRated();
   const featuredContent = topRated[0];
 
   const categoryData = await Promise.all(

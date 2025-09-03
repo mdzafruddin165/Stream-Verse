@@ -8,7 +8,6 @@ import Logo from './logo';
 import { Button } from './ui/button';
 import { Sheet, SheetContent, SheetTrigger } from './ui/sheet';
 import { cn } from '@/lib/utils';
-import { Sparkles } from 'lucide-react';
 
 const navLinks = [
   { href: '/', label: 'Home' },
