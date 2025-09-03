@@ -1,9 +1,9 @@
-import type { Content } from '@/types';
+import type { Movie } from '@/types';
 import ContentCard from './content-card';
 
 interface ContentCarouselProps {
   title: string;
-  contents: Content[];
+  contents: Movie[];
 }
 
 export default function ContentCarousel({ title, contents }: ContentCarouselProps) {

@@ -1,18 +1,22 @@
-import type { Content } from '@/types';
+import type { Movie } from '@/types';
 import { Button } from './ui/button';
 import { Info, Play } from 'lucide-react';
 import Image from 'next/image';
 
 interface HeroSectionProps {
-  content: Content;
+  content: Movie;
 }
 
 export default function HeroSection({ content }: HeroSectionProps) {
+  const backdropUrl = content.backdrop_path
+    ? `https://image.tmdb.org/t/p/original${content.backdrop_path}`
+    : `https://placehold.co/1280x720/121212/E50914?text=${content.title}`;
+
   return (
     <div className="relative h-[56.25vw] min-h-[400px] max-h-[800px] w-full">
       <div className="absolute inset-0">
         <Image
-          src={content.image}
+          src={backdropUrl}
           alt={content.title}
           fill
           className="object-cover"
@@ -29,7 +33,7 @@ export default function HeroSection({ content }: HeroSectionProps) {
             {content.title}
           </h1>
           <p className="text-sm md:text-base lg:text-lg text-neutral-200 line-clamp-3">
-            {content.description}
+            {content.overview}
           </p>
           <div className="flex items-center space-x-4">
             <Button size="lg" className="font-bold">

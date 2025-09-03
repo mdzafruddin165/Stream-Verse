@@ -1,5 +1,6 @@
 import type { Content, Category } from '@/types';
 
+// These mock categories are now being replaced by direct API calls in `app/page.tsx`
 export const mockCategories: Category[] = [
   { id: 'trending', title: 'Trending Now' },
   { id: 'action', title: 'Action Packed' },
@@ -8,6 +9,7 @@ export const mockCategories: Category[] = [
   { id: 'sci-fi', title: 'Sci-Fi & Fantasy' },
 ];
 
+// This mock content is now being replaced by direct API calls in `app/page.tsx`
 export const mockContent: Content[] = [
   {
     id: 1,
