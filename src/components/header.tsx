@@ -14,7 +14,6 @@ const navLinks = [
   { href: '/tv-shows', label: 'TV Shows' },
   { href: '/movies', label: 'Movies' },
   { href: '/my-list', label: 'My List' },
-  { href: '/recommendations', label: 'For You' },
 ];
 
 export default function Header() {
