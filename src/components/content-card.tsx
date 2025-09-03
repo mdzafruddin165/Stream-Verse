@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { getYoutubeTrailer } from '@/lib/youtube';
-import { Loader } from 'lucide-react';
+import { Loader, PlayCircle } from 'lucide-react';
 
 interface ContentCardProps {
   content: Movie;
@@ -32,7 +32,7 @@ export default function ContentCard({ content }: ContentCardProps) {
 
   return (
     <div
-      className="group relative flex-shrink-0 w-40 sm:w-48 md:w-56 lg:w-64 rounded-lg overflow-hidden transition-transform duration-300 ease-in-out md:hover:!scale-110 md:hover:z-10 cursor-pointer"
+      className="group relative flex-shrink-0 w-32 sm:w-40 md:w-48 lg:w-56 rounded-md overflow-hidden transition-transform duration-300 ease-in-out md:hover:scale-105 md:hover:z-10 cursor-pointer"
       onClick={handleWatch}
     >
       <Image
@@ -43,13 +43,14 @@ export default function ContentCard({ content }: ContentCardProps) {
         className="object-cover w-full h-auto transition-all"
         data-ai-hint="movie poster"
       />
-      <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+      <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-2">
         {loading ? (
-          <Loader className="h-12 w-12 text-white animate-spin" />
+          <Loader className="h-10 w-10 text-white animate-spin" />
         ) : (
-          <div className="text-center text-white p-4">
-            <h3 className="text-lg font-bold">{content.title}</h3>
-            <p className="text-sm mt-2">Click to watch trailer</p>
+          <div className="text-center text-white">
+            <PlayCircle className="h-12 w-12 mx-auto mb-2" />
+            <h3 className="text-sm sm:text-base font-bold text-balance">{content.title}</h3>
+            <p className="text-xs text-neutral-300 mt-1 hidden sm:block">Watch trailer</p>
           </div>
         )}
       </div>
