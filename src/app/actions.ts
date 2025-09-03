@@ -24,6 +24,14 @@ export async function generateRecommendationsAction(
   prevState: FormState,
   formData: FormData
 ): Promise<FormState> {
+  if (!process.env.GEMINI_API_KEY && !process.env.GOOGLE_API_KEY) {
+    return {
+      message: 'AI recommendations are disabled. Please configure a Google AI API key in your environment.',
+      recommendations: [],
+      errors: {},
+    };
+  }
+
   try {
     const validatedFields = recommendationSchema.safeParse({
       viewingHistory: formData.get('viewingHistory'),

@@ -11,6 +11,7 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
+import {googleAI} from '@genkit-ai/googleai';
 
 const PersonalizedRecommendationsInputSchema = z.object({
   viewingHistory: z
@@ -43,20 +44,6 @@ export async function getPersonalizedRecommendations(
   return personalizedRecommendationsFlow(input);
 }
 
-const prompt = ai.definePrompt({
-  name: 'personalizedRecommendationsPrompt',
-  input: {schema: PersonalizedRecommendationsInputSchema},
-  output: {schema: PersonalizedRecommendationsOutputSchema},
-  prompt: `You are a movie and TV show recommendation expert.
-
-  Based on the user's viewing history and preferences, provide {{numberOfRecommendations}} personalized recommendations.
-
-  Viewing History: {{{viewingHistory}}}
-  Preferences: {{{preferences}}}
-
-  Recommendations:`, // Ensure the output matches the schema
-});
-
 const personalizedRecommendationsFlow = ai.defineFlow(
   {
     name: 'personalizedRecommendationsFlow',
@@ -64,6 +51,26 @@ const personalizedRecommendationsFlow = ai.defineFlow(
     outputSchema: PersonalizedRecommendationsOutputSchema,
   },
   async input => {
+    if (!process.env.GEMINI_API_KEY && !process.env.GOOGLE_API_KEY) {
+      console.warn("API key not found. Returning empty recommendations.");
+      return { recommendations: ["AI Recommendations are currently unavailable. Please configure your API key."] };
+    }
+    
+    const prompt = ai.definePrompt({
+      name: 'personalizedRecommendationsPrompt',
+      input: {schema: PersonalizedRecommendationsInputSchema},
+      output: {schema: PersonalizedRecommendationsOutputSchema},
+      model: googleAI('gemini-2.0-flash'),
+      prompt: `You are a movie and TV show recommendation expert.
+
+      Based on the user's viewing history and preferences, provide {{numberOfRecommendations}} personalized recommendations.
+
+      Viewing History: {{{viewingHistory}}}
+      Preferences: {{{preferences}}}
+
+      Recommendations:`,
+    });
+
     const {output} = await prompt(input);
     return output!;
   }
